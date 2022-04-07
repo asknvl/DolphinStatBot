@@ -1,0 +1,17 @@
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\DolphinStatBot.exe
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\DolphinStatBot.deps.json
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\DolphinStatBot.runtimeconfig.json
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\DolphinStatBot.dll
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\DolphinStatBot.pdb
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.csproj.AssemblyReference.cache
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.GeneratedMSBuildEditorConfig.editorconfig
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.AssemblyInfoInputs.cache
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.AssemblyInfo.cs
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.csproj.CoreCompileInputs.cache
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.dll
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\refint\DolphinStatBot.dll
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.pdb
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.genruntimeconfig.cache
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\ref\DolphinStatBot.dll
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\RestSharp.dll
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.csproj.CopyComplete

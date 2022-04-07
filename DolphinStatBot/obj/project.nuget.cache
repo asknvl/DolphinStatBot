@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "rPAvJRw/9zIwwESG84o7cumFiBOmA0DOk4cKVy8kUxtuaHU6BGslXNQrIWSVp5smCsGIL0NhLnQ86W5kEcxscw==",
+  "success": true,
+  "projectFilePath": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Никита\\.nuget\\packages\\restsharp\\106.10.0\\restsharp.106.10.0.nupkg.sha512"
+  ],
+  "logs": []
+}
