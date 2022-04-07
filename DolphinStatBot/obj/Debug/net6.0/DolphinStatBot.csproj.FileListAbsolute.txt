@@ -15,3 +15,4 @@ D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStat
 D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\ref\DolphinStatBot.dll
 D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\RestSharp.dll
 D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net6.0\DolphinStatBot.csproj.CopyComplete
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\Newtonsoft.Json.dll
