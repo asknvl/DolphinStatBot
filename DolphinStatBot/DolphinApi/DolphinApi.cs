@@ -19,7 +19,7 @@ namespace DolphinStatBot.DolphinApi
         #endregion
 
         #region properties
-        List<uint> FilteredIDs { get; set; } = new List<uint>();
+        public List<uint> FilteredIDs { get; set; } = new List<uint>();
         #endregion
 
         public DolphinApi(string url, string token)
@@ -55,6 +55,7 @@ namespace DolphinStatBot.DolphinApi
                         {
                             User? user = result.ToObject<User>();
                             if (user != null)
+                                if (!FilteredIDs.Contains(user.id))
                                 users.Add(user);
                         }
                     }
@@ -67,9 +68,9 @@ namespace DolphinStatBot.DolphinApi
             }
             return users;
         }
-        public async Task<Dictionary<string, Statistics>> GetStatistics(uint[] ids, string startDate, string endDate)
+        public async Task<Dictionary<uint, Statistics>> GetStatistics(uint[] ids, string startDate, string endDate)
         {
-            Dictionary<string, Statistics> res = new Dictionary<string, Statistics>();
+            Dictionary<uint, Statistics> res = new Dictionary<uint, Statistics>();
             try
             {
                 await Task.Run(() =>
@@ -103,7 +104,7 @@ namespace DolphinStatBot.DolphinApi
                     {
                         string sid = $"{item}";
                         dynamic stat = data[sid];
-                        res.Add(sid, new Statistics()
+                        res.Add(/*sid*/item, new Statistics()
                         {
                             spend = stat.spend,
                             results = stat.results,
@@ -114,8 +115,7 @@ namespace DolphinStatBot.DolphinApi
                     dynamic? ttl = data["total"];
                     if (ttl != null)
                     {
-
-                        res.Add("total", new Statistics()
+                        res.Add(0xFF, new Statistics()
                         {
                             spend = ttl.spend,
                             results = ttl.results,
@@ -130,6 +130,7 @@ namespace DolphinStatBot.DolphinApi
                 Console.WriteLine(ex.Message);
                 throw new Exception($"Get statistics exception (ids number = {ids.Length})");
             }
+            res = res.OrderByDescending(o => o.Value.spend).ToDictionary(x => x.Key, x => x.Value);
             return res;
         }
 
