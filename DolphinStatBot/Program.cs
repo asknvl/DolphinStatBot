@@ -1,7 +1,7 @@
 ﻿
 
 using DolphinStatBot.DolphinApi;
-
+using DolphinStatBot.Stat;
 using DolphinStatBot.Users;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -11,27 +11,34 @@ class Program
 {
     public static async Task Main(string[] args)
     {
-               
-        DolphinApi dolphin = new DolphinApi("http://188.225.43.87");        
+
+        string token = "1-578000f643ac0dd4f72579dd758ebd8e";
+
+        DolphinApi dolphin = new DolphinApi("http://188.225.43.87", token);        
         List<User> users = await dolphin.GetUsers();
+        users.ForEach(user => Console.WriteLine($"id={user.id}\tlogin={user.login}\tname={user.display_name}"));
 
+        Console.WriteLine();
+        double total = 0;
 
-        var client = new RestClient("http://188.225.43.87/new/stat/by_user?currency=USD");
-        client.Timeout = -1;
-        var request = new RestRequest(Method.POST);
-        request.AddHeader("Authorization", "1-578000f643ac0dd4f72579dd758ebd8e");
-        request.AddHeader("Content-Type", "application/json");
+        //foreach (var user in users)
+        //{
+        //    Statistics statistics = await dolphin.GetStatistics("2022-02-15", user.id);
 
-        dynamic p = new JObject();
-        p.ids = new JArray();
-        p.ids.Add("0");
+        //    string name = !user.display_name.Equals("") ? user.display_name : user.login ;
 
-        request.AddParameter("application/json", p.ToString(), ParameterType.RequestBody);
-        //request.AddParameter("ids[]", "{1}");
-        request.AddParameter("dates[startDate]", "2022-04-08");
-        request.AddParameter("dates[endDate]", "2022-04-08");
-        IRestResponse response = client.Execute(request);
-        Console.WriteLine(response.Content);
+        //    Console.WriteLine($"id={user.id} name={name}");
+        //    Console.WriteLine($"spend={statistics.spend}");
+        //    Console.WriteLine($"leads={statistics.results}");
+        //    Console.WriteLine($"cpa={statistics.cpa}");
+        //    Console.WriteLine();
+
+        //    total += statistics.spend;
+        //}
+
+        var ids = users.Select(user => user.id).ToArray();
+        Dictionary<string, Statistics> statistics = await dolphin.GetStatistics(ids, "2022-04-08", "2022-04-09");
+
 
         Console.ReadLine();
     }

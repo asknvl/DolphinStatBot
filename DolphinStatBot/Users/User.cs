@@ -10,8 +10,31 @@ namespace DolphinStatBot.Users
     public class User : IUser
     {
         public uint id { get; set; }
-        public string login { get; set; }
-        public string display_name { get; set; }
+
+        string _login;
+        public string login {
+            get => _login;
+            set
+            {
+                if (value == null)
+                    _login = "";
+                else 
+                    _login = value;
+            }
+        }
+
+        string _display_name;
+        public string display_name
+        {
+            get => _display_name;
+            set
+            {
+                if (value == null)
+                    _display_name = "";
+                else
+                    _display_name = value;
+            }
+        }
         public int role_id { get; set; }        
         public int? teamlead_id { get; set; }
         public string tags { get; set; }
