@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DolphinStatBot.Stat
 {
-    public class Statistics : IStatistics
+    public class Statistics
     {        
         public double spend { get; set; }     
         public uint results { get; set; }        

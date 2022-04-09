@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DolphinStatBot.Users
 {
-    public class User : IUser
+    public class User
     {
         public uint id { get; set; }
 

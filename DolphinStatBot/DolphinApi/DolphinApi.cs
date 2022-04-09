@@ -76,8 +76,7 @@ namespace DolphinStatBot.DolphinApi
             {
                 await Task.Run(async () =>
                 {
-                    var client = new RestClient($"{url}/new/stat/by_date?currency=USD");
-                    client.Timeout = -1;
+                    var client = new RestClient($"{url}/new/stat/by_date?currency=USD");                    
                     var request = new RestRequest(Method.POST);
                     request.AddHeader("Authorization", $"{token}");
                     request.AddHeader("Content-Type", "application/json");
