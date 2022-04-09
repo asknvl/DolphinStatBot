@@ -14,7 +14,7 @@ namespace DolphinStatBot.pdf
     public class PdfCreator
     {
 
-        public string GetPdf(List<User> users, Directory<string, Statistics> statistics)
+        public string GetPdf(List<User> users, Dictionary<string, Statistics> statistics)
         {
             string res = "";
 
@@ -23,15 +23,58 @@ namespace DolphinStatBot.pdf
             var document = new PdfDocument();
             var page = document.AddPage();
             var gfx = XGraphics.FromPdfPage(page);
-            var font = new XFont("Roboto", 20, XFontStyle.Italic);
 
-            gfx.DrawString("Hello World!", font, XBrushes.Black, new XRect(20, 20, page.Width, page.Height), XStringFormats.Center);
+            XStringFormat formatHeader = new XStringFormat();
+            formatHeader.LineAlignment = XLineAlignment.Near;
+            formatHeader.Alignment = XStringAlignment.Near;
+            var fontHeader = new XFont("Roboto", 12, XFontStyle.Bold);
+
+            XStringFormat format = new XStringFormat();
+            format.LineAlignment = XLineAlignment.Near;
+            format.Alignment = XStringAlignment.Near;
+            var font = new XFont("Roboto", 12, XFontStyle.Regular);
+
+            int marginLeft = 20;
+            int marginTop = 20;
+
+            int columnDistance = 120;
+            int col = 0;
+
+            gfx.DrawString("Имя", fontHeader, XBrushes.Black, new XRect(marginLeft + col, marginTop, page.Width, page.Height), format);
+            gfx.DrawString("Расход", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
+            gfx.DrawString("Лиды", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
+            gfx.DrawString("Лиды, CPA", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
+
+            //for (int i = 0; i < users.Count - 1; i++)
+            int i = 0;
+            foreach (var user in users)
+            {
+                if (user.id == )
+                int top = marginTop + (i + 1) * 20;
+                col = 0;
+
+                //var user = users[i];
+                string userName = !user.display_name.Equals("") ? user.display_name : user.login;
+
+                string id = $"{user.id}";
+
+                gfx.DrawString(userName, font, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
+                gfx.DrawString($"{statistics[id].spend}", font, XBrushes.Black, new XRect(marginLeft + (col+=columnDistance), top, page.Width, page.Height), format);
+                gfx.DrawString($"{statistics[id].results}", font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+                gfx.DrawString($"{statistics[id].cpa}", font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+
+                i++;
+            }
+
+
+            //gfx.DrawString("Hello World!", font, XBrushes.Black, new XRect(20, 20, page.Width, page.Height), XStringFormats.Center);
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "PDFS");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            document.Save(Path.Combine(path, $"{name}.pdf"));
+            string fileName = "test";            
+            document.Save(Path.Combine(path, $"{fileName}.pdf"));
 
             return res;
         }

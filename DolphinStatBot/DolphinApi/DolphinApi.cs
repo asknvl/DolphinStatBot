@@ -17,6 +17,11 @@ namespace DolphinStatBot.DolphinApi
         string url;
         string token;
         #endregion
+
+        #region properties
+        List<uint> FilteredIDs { get; set; } = new List<uint>();
+        #endregion
+
         public DolphinApi(string url, string token)
         {
             this.url = url;
@@ -62,58 +67,6 @@ namespace DolphinStatBot.DolphinApi
             }
             return users;
         }
-
-        /// <summary>
-        /// Returns total statistics by user and date
-        /// </summary>
-        /// <param name="date">YYYY-MM-DD</param>
-        /// <param name="id">ID (1, 2, 3...)</param>
-        /// <returns></returns>
-        public async Task<Statistics> GetStatistics(string date, uint id)
-        {
-            Statistics statistics = new Statistics();
-            try
-            {
-                await Task.Run(async () =>
-                {
-                    var client = new RestClient($"{url}/new/stat/by_date?currency=USD");                    
-                    var request = new RestRequest(Method.POST);
-                    request.AddHeader("Authorization", $"{token}");
-                    request.AddHeader("Content-Type", "application/json");
-
-                    dynamic p = new JObject();
-
-                    p.dates = new JArray();
-                    p.dates.Add($"{date}");
-                    p.users_ids = new JArray();
-                    p.users_ids.Add($"{id}");
-                    p.accounts_ids = -1;
-                    p.cabs_ids = -1;
-                    p.campaigns_ids = -1;
-                    p.adsets_ids = -1;
-                    p.ads_ids = -1;
-                    request.AddParameter("application/json", p.ToString(), ParameterType.RequestBody);
-
-                    IRestResponse response = client.Execute(request);
-
-                    JObject json = JObject.Parse(response.Content);
-                    dynamic? imp = json["data"][$"{date}"];/*["impressions"];*/
-                    if (imp != null)
-                    {
-                        statistics.spend = imp.spend;
-                        statistics.results = imp.results;
-                        statistics.cpa = imp.cpa;
-                    }
-                });
-
-            } catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw new Exception($"Get statistics exception (date={date} id={id})");
-            }
-            return statistics;
-        }
-
         public async Task<Dictionary<string, Statistics>> GetStatistics(uint[] ids, string startDate, string endDate)
         {
             Dictionary<string, Statistics> res = new Dictionary<string, Statistics>();

@@ -24,8 +24,10 @@ class Program
         var ids = users.Select(user => user.id).ToArray();
         var statistics = await dolphin.GetStatistics(ids, "2022-04-09", "2022-04-09");
 
+        var filter = new List<uint>();
+
         PdfCreator pdf = new PdfCreator();
-        pdf.GetPdf("test");
+        pdf.GetPdf(users, statistics);
          
 
 
