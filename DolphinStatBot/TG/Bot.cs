@@ -124,9 +124,7 @@ namespace DolphinStatBot.TG
             {
                 string date = DateTime.Now.ToString("yyyy-MM-dd");
                 string time = DateTime.Now.ToString("HH mm ss");
-
                 string path = await getAndSaveStat(date);
-
                 foreach (var id in userManager.GetIDs())
                 {
                     using (var stream = System.IO.File.Open(path, FileMode.Open))
@@ -139,7 +137,6 @@ namespace DolphinStatBot.TG
 
         async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-
             if (update.Message == null)
                 return;
 
