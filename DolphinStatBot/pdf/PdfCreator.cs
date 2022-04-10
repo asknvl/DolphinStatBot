@@ -191,7 +191,6 @@ namespace DolphinStatBot.pdf
 public class FontResolver : IFontResolver
 {
     string IFontResolver.DefaultFontName => throw new NotImplementedException();
-
     public byte[] GetFont(string faceName)
     {
         using (var ms = new MemoryStream())
