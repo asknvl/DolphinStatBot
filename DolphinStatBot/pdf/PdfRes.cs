@@ -9,7 +9,7 @@ namespace DolphinStatBot.pdf
     public class PdfRes
     {
         public string Date { get; set; }
-        public string Time { get; set; }
-        public Stream PdfStream { get; set; }
+        public string Time { get; set; }                 
+        public MemoryStream PdfStream { get; set; }
     }
 }

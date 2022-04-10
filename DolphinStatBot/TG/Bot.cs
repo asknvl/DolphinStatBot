@@ -18,11 +18,7 @@ namespace DolphinStatBot.TG
     public class Bot
     {
         #region const
-#if DEBUG1
         const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
-#else
-        const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
-#endif
         #endregion
 
         #region vars
@@ -57,7 +53,6 @@ namespace DolphinStatBot.TG
             sendTimer.AutoReset = true;
 
             initTime(23, 55, 60);
-
         }
 
         void initTime(int hours, int minutes, int interval)
@@ -73,14 +68,15 @@ namespace DolphinStatBot.TG
         }
         
         private async void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
-        {            
+        {
             now = DateTime.Now;
             span = run - now;
-            if (span < TimeSpan.Zero) {
+            if (span < TimeSpan.Zero)
+            {
                 Console.WriteLine(now);
                 run = run.AddMinutes(minuteInteral);
                 await sendStat();
-            }                        
+            }            
         }
 
         #region private
@@ -92,37 +88,33 @@ namespace DolphinStatBot.TG
                            cancellationToken: ct);
         }
 
-
-        async Task<PdfRes> createPdfStat()
+        async Task<MemoryStream> getStat(string date)
         {
-            PdfRes res = new PdfRes();
-
-            string date = DateTime.Now.ToString("yyyy-MM-dd");
-            string time = DateTime.Now.ToString("HH mm ss");
-
-            var users = await dolphin.GetUsers();
-            var ids = users.Select(user => user.id).ToArray();
-            var statistics = await dolphin.GetStatistics(ids, date, date);
-
-            res.Date = date;
-            res.Time = time;
-            res.PdfStream = pdf.GetPdf(users, statistics);
-
-            return res;
+            MemoryStream stream = new MemoryStream();
+            await Task.Run(async () => { 
+                var users = await dolphin.GetUsers();
+                var ids = users.Select(user => user.id).ToArray();
+                var statistics = await dolphin.GetStatistics(ids, date, date);
+                stream = pdf.GetPdf(users, statistics);
+            });
+            return stream;
         }
 
-        async Task sendStat(long id, PdfRes pdf)
+        async Task<string> getAndSaveStat(string date)
         {
-            //string date = DateTime.Now.ToString("yyyy-MM-dd");
-            //string time = DateTime.Now.ToString("HH mm ss");
+            string path = "";
+            await Task.Run(async () => {
+                var users = await dolphin.GetUsers();
+                var ids = users.Select(user => user.id).ToArray();
+                var statistics = await dolphin.GetStatistics(ids, date, date);
+                path = pdf.GetAndSavePdf(users, statistics);
+            });
+            return path;
+        }
 
-            //var users = await dolphin.GetUsers();
-            //var ids = users.Select(user => user.id).ToArray();
-            //var statistics = await dolphin.GetStatistics(ids, date, date);
-
-            //var stream = pdf.GetPdf(users, statistics);
-
-            InputOnlineFile inputOnlineFile = new InputOnlineFile(pdf.PdfStream, $"{pdf.Date} {pdf.Time}.pdf");
+        async Task sendStat(long id, Stream stream, string date, string time)
+        {            
+            InputOnlineFile inputOnlineFile = new InputOnlineFile(stream, $"{date} {time}.pdf");
             await botClient.SendDocumentAsync(id, inputOnlineFile);
         }
 
@@ -130,12 +122,17 @@ namespace DolphinStatBot.TG
         {
             await Task.Run(async () =>
             {
+                string date = DateTime.Now.ToString("yyyy-MM-dd");
+                string time = DateTime.Now.ToString("HH mm ss");
 
-                PdfRes pdf = await createPdfStat();
+                string path = await getAndSaveStat(date);
 
                 foreach (var id in userManager.GetIDs())
                 {
-                   await sendStat(id, pdf);
+                    using (var stream = System.IO.File.Open(path, FileMode.Open))
+                    {
+                        await sendStat(id, stream, date, time);
+                    }
                 }
             });
         }
@@ -158,9 +155,12 @@ namespace DolphinStatBot.TG
                 case "/getstat":
                     if (userManager.Check(id))
                     {
-                        var pdf = await createPdfStat();
-                        await sendStat(id, pdf);
-                        
+                        //await sendStat(id);                        
+                        string date = DateTime.Now.ToString("yyyy-MM-dd");
+                        string time = DateTime.Now.ToString("HH mm ss");
+                        MemoryStream stream = await getStat(date);
+                        await sendStat(id, stream, date, time);
+
                     } else
                     {
                         send("Нет доступа", update, cancellationToken);
