@@ -31,13 +31,11 @@ namespace DolphinStatBot.TG
         UserManager userManager;
         DolphinApi dolphin;
         PdfCreator pdf;
-        System.Timers.Timer timer;
 
-        int Hours = 0;
-        int Minutes = 0;
-
+        System.Timers.Timer sendTimer;
         DateTime run, now;
         TimeSpan span;
+        int minuteInteral;
 
         #endregion
 
@@ -54,25 +52,24 @@ namespace DolphinStatBot.TG
 
             botClient = new TelegramBotClient(Token);
 
-            timer = new System.Timers.Timer(2000);
-            timer.Elapsed += Timer_Elapsed;
-            timer.AutoReset = true;
+            sendTimer = new System.Timers.Timer(2000);
+            sendTimer.Elapsed += Timer_Elapsed;
+            sendTimer.AutoReset = true;
 
-            initTime(14, 13);
+            initTime(23, 55, 60);
 
         }
 
-        void initTime(int hours, int minutes)
+        void initTime(int hours, int minutes, int interval)
         {
-            timer.Enabled = false;
-            Hours = hours;
-            Minutes = minutes;
+            sendTimer.Enabled = false;            
+            minuteInteral = interval;
             now = DateTime.Now;
-            run = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Hours, Minutes, 0);
+            run = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
             span = run - now;
             if (span < TimeSpan.Zero)
                 run = run.AddDays(1);
-            timer.Enabled = true;
+            sendTimer.Enabled = true;
         }
         
         private async void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
@@ -81,7 +78,7 @@ namespace DolphinStatBot.TG
             span = run - now;
             if (span < TimeSpan.Zero) {
                 Console.WriteLine(now);
-                run = run.AddMinutes(5);
+                run = run.AddMinutes(minuteInteral);
                 await sendStat();
             }                        
         }
@@ -95,8 +92,11 @@ namespace DolphinStatBot.TG
                            cancellationToken: ct);
         }
 
-        async Task sendStat(long id)
+
+        async Task<PdfRes> createPdfStat()
         {
+            PdfRes res = new PdfRes();
+
             string date = DateTime.Now.ToString("yyyy-MM-dd");
             string time = DateTime.Now.ToString("HH mm ss");
 
@@ -104,9 +104,25 @@ namespace DolphinStatBot.TG
             var ids = users.Select(user => user.id).ToArray();
             var statistics = await dolphin.GetStatistics(ids, date, date);
 
-            var stream = pdf.GetPdf(users, statistics);
+            res.Date = date;
+            res.Time = time;
+            res.PdfStream = pdf.GetPdf(users, statistics);
 
-            InputOnlineFile inputOnlineFile = new InputOnlineFile(stream, $"{date} {time}.pdf");
+            return res;
+        }
+
+        async Task sendStat(long id, PdfRes pdf)
+        {
+            //string date = DateTime.Now.ToString("yyyy-MM-dd");
+            //string time = DateTime.Now.ToString("HH mm ss");
+
+            //var users = await dolphin.GetUsers();
+            //var ids = users.Select(user => user.id).ToArray();
+            //var statistics = await dolphin.GetStatistics(ids, date, date);
+
+            //var stream = pdf.GetPdf(users, statistics);
+
+            InputOnlineFile inputOnlineFile = new InputOnlineFile(pdf.PdfStream, $"{pdf.Date} {pdf.Time}.pdf");
             await botClient.SendDocumentAsync(id, inputOnlineFile);
         }
 
@@ -114,9 +130,12 @@ namespace DolphinStatBot.TG
         {
             await Task.Run(async () =>
             {
+
+                PdfRes pdf = await createPdfStat();
+
                 foreach (var id in userManager.GetIDs())
                 {
-                   await sendStat(id);
+                   await sendStat(id, pdf);
                 }
             });
         }
@@ -139,7 +158,8 @@ namespace DolphinStatBot.TG
                 case "/getstat":
                     if (userManager.Check(id))
                     {
-                        await sendStat(id);
+                        var pdf = await createPdfStat();
+                        await sendStat(id, pdf);
                         
                     } else
                     {
@@ -165,10 +185,11 @@ namespace DolphinStatBot.TG
                 {
                     int hh = int.Parse(spl[1]);
                     int mm = int.Parse(spl[2]);
+                    int interval = int.Parse(spl[3]);
 
-                    initTime(hh, mm);
+                    initTime(hh, mm,interval);
 
-                    send($"Следующее время сбора данных: {run}", update, cancellationToken);
+                    send($"Следующее время сбора данных: {run}, интервал:{interval} минут", update, cancellationToken);
 
                 } catch {
                     send("Неверный формат ввода времени", update, cancellationToken);
