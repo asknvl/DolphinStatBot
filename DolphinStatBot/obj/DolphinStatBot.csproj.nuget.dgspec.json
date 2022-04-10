@@ -51,6 +51,14 @@
             "RestSharp": {
               "target": "Package",
               "version": "[106.10.0, )"
+            },
+            "Telegram.Bot": {
+              "target": "Package",
+              "version": "[18.0.0-alpha.1, )"
+            },
+            "Telegram.Bot.Extensions.Polling": {
+              "target": "Package",
+              "version": "[2.0.0-alpha.1, )"
             }
           },
           "imports": [

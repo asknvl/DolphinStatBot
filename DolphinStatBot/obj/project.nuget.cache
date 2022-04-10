@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Oh0bq4bd9J+9e4NZSmRXSqFlQw+lxHyOM3N/1hS0BUrXTSqCosmmVEKw5DCV+X6J/mAXlWrta35XrLDwwjw/ug==",
+  "dgSpecHash": "gA1BitctIMd2f78a+au0BJGFb5X35q3AAuHymmTumis7hglOAso0izg109QGQUEpiFidlfUkrIuFH2xRHxz7zA==",
   "success": true,
   "projectFilePath": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
   "expectedPackageFiles": [
@@ -10,7 +10,10 @@
     "C:\\Users\\Никита\\.nuget\\packages\\sixlabors.fonts\\1.0.0-beta0013\\sixlabors.fonts.1.0.0-beta0013.nupkg.sha512",
     "C:\\Users\\Никита\\.nuget\\packages\\sixlabors.imagesharp\\1.0.4\\sixlabors.imagesharp.1.0.4.nupkg.sha512",
     "C:\\Users\\Никита\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
-    "C:\\Users\\Никита\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.0\\system.runtime.compilerservices.unsafe.4.7.0.nupkg.sha512"
+    "C:\\Users\\Никита\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.0\\system.runtime.compilerservices.unsafe.4.7.0.nupkg.sha512",
+    "C:\\Users\\Никита\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
+    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot\\18.0.0-alpha.1\\telegram.bot.18.0.0-alpha.1.nupkg.sha512",
+    "C:\\Users\\Никита\\.nuget\\packages\\telegram.bot.extensions.polling\\2.0.0-alpha.1\\telegram.bot.extensions.polling.2.0.0-alpha.1.nupkg.sha512"
   ],
   "logs": []
 }

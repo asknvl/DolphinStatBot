@@ -1,0 +1,5 @@
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net5.0\DolphinStatBot.csproj.AssemblyReference.cache
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net5.0\DolphinStatBot.GeneratedMSBuildEditorConfig.editorconfig
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net5.0\DolphinStatBot.AssemblyInfoInputs.cache
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net5.0\DolphinStatBot.AssemblyInfo.cs
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\obj\Debug\net5.0\DolphinStatBot.csproj.CoreCompileInputs.cache

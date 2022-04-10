@@ -34,3 +34,5 @@ D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\pdf\Fonts\R
 D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\pdf\Fonts\Roboto-ThinItalic.ttf
 D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\pdf\Images\xtime.png
 D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\pdf\Images\xtime_trim.png
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\Telegram.Bot.dll
+D:\WORK\xtime\Sources\DolphinStatBot\DolphinStatBot\bin\Debug\net6.0\Telegram.Bot.Extensions.Polling.dll
