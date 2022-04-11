@@ -37,21 +37,17 @@ namespace DolphinStatBot.TG
 
         public Bot()
         {
-
             dolphin = new DolphinApi("http://188.225.43.87", "1-578000f643ac0dd4f72579dd758ebd8e");
             dolphin.FilteredIDs = new List<uint> { 2, 6, 7, 8, 14 };
-
             pdf = new PdfCreator();           
-
             userManager = new UserManager();
+
             userManager.Init();
 
             botClient = new TelegramBotClient(Token);
-
             sendTimer = new System.Timers.Timer(2000);
             sendTimer.Elapsed += Timer_Elapsed;
             sendTimer.AutoReset = true;
-
             initTime(23, 55, 60);
         }
 
