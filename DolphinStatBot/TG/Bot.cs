@@ -1,6 +1,7 @@
 ﻿using DolphinStatBot.Accounts;
 using DolphinStatBot.Dolphin;
 using DolphinStatBot.pdf;
+using DolphinStatBot.Stat;
 using DolphinStatBot.Store;
 using DolphinStatBot.Users;
 using System;
@@ -19,6 +20,7 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
+        string version = "dailyreporter_bot v1.1";
 #if DEBUG
         const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
 #else
@@ -46,7 +48,7 @@ namespace DolphinStatBot.TG
             dolphin = new DolphinApi("http://188.225.43.87", "1-578000f643ac0dd4f72579dd758ebd8e");
             dolphin.FilteredIDs = new List<uint> { 2, 6, 7, 8, 14 };
 
-            pdf = new PdfCreator();
+            pdf = new PdfCreator(version);
             userManager = new UserManager();
 
             userManager.Init();
@@ -97,8 +99,31 @@ namespace DolphinStatBot.TG
             await Task.Run(async () => { 
                 var users = await dolphin.GetUsers();
                 var ids = users.Select(user => user.id).ToArray();
-                var statistics = await dolphin.GetStatistics(ids, date, date);
-                stream = pdf.GetPdf(users, statistics);
+                var userstat = await dolphin.GetStatistics(ids, date, date);
+
+                var intids = users.Select(user => (int)user.id).ToArray();
+
+                var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
+                string[] tags = new string[] { "IND", "PER", "AUS" };
+                foreach (var tag in tags)
+                {
+                    var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
+                    var intIds = accs.Select(acc => acc.id).ToArray();
+                    var stat = await dolphin.GetStatisticsByAccounts(intIds, date, date);
+                    tagstat.Add(tag, stat);
+                }
+
+                
+                //var indAccsIds = indAccs.Select(acc => acc.id).ToArray();
+                //var stat = await dolphin.GetStatisticsByAccounts(indAccsIds, date, date);
+                //var perAccs = await dolphin.GetAccounts(intids, new string[] { "PER" }, new string[] { "не-обновлять", "без-комментов" });
+                //var ausAccs = await dolphin.GetAccounts(intids, new string[] { "AUS" }, new string[] { "не-обновлять", "без-комментов" });
+
+                
+                //tagstat.Add("IND", indAccs);
+
+
+                stream = pdf.GetPdf(date, users, userstat, tagstat);
             });
             return stream;
         }
