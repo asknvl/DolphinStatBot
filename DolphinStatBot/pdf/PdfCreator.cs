@@ -13,9 +13,7 @@ namespace DolphinStatBot.pdf
 {
     public class PdfCreator
     {
-
         XImage image;
-
         public PdfCreator()
         {
             GlobalFontSettings.FontResolver = new FontResolver();

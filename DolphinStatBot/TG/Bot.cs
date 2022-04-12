@@ -1,6 +1,8 @@
-﻿using DolphinStatBot.Dolphin;
+﻿using DolphinStatBot.Accounts;
+using DolphinStatBot.Dolphin;
 using DolphinStatBot.pdf;
 using DolphinStatBot.Store;
+using DolphinStatBot.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +19,13 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
+#if DEBUG
+        const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
+#else
         #region const
         const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
         #endregion
+#endif
 
         #region vars
         TelegramBotClient botClient;
@@ -33,13 +39,14 @@ namespace DolphinStatBot.TG
         TimeSpan span;
         int minuteInteral;
 
-        #endregion
+#endregion
 
         public Bot()
         {
             dolphin = new DolphinApi("http://188.225.43.87", "1-578000f643ac0dd4f72579dd758ebd8e");
             dolphin.FilteredIDs = new List<uint> { 2, 6, 7, 8, 14 };
-            pdf = new PdfCreator();           
+
+            pdf = new PdfCreator();
             userManager = new UserManager();
 
             userManager.Init();
@@ -53,7 +60,7 @@ namespace DolphinStatBot.TG
 
         void initTime(int hours, int minutes, int interval)
         {
-            sendTimer.Enabled = false;            
+            sendTimer.Enabled = false;
             minuteInteral = interval;
             now = DateTime.Now;
             run = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, hours, minutes, 0);
@@ -72,10 +79,10 @@ namespace DolphinStatBot.TG
                 Console.WriteLine(now);
                 run = run.AddMinutes(minuteInteral);
                 await sendStat();
-            }            
+            }
         }
 
-        #region private
+#region private
         async void send(string msg, Update upd, CancellationToken ct)
         {
             Message sentMessage = await botClient.SendTextMessageAsync(
@@ -208,9 +215,9 @@ namespace DolphinStatBot.TG
             Console.WriteLine(ErrorMessage);
             return Task.CompletedTask;
         }
-        #endregion
+#endregion
 
-        #region public
+#region public
         public void Start()
         {
             cts = new CancellationTokenSource();
@@ -226,6 +233,6 @@ namespace DolphinStatBot.TG
                 receiverOptions,
                 cancellationToken: cts.Token);
         }        
-        #endregion
+#endregion
     }
 }
