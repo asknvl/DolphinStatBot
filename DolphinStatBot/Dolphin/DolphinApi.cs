@@ -162,25 +162,19 @@ namespace DolphinStatBot.Dolphin
                     foreach (var item in data.Children()) {
                         JToken jid = item["id"];
                         JToken jtags = item["tags"];
+                        JToken jarch = item["archived"];
                         var acc = new Account()
                         {
                             id = jid.ToObject<uint>(),
-                            tags = jtags?.ToObject<string[]>()                            
+                            tags = jtags.ToObject<string[]>(),     
+                            archived = jarch.ToObject<int>()
                         };
-
-                        //if (nums1.Any(x => nums2.Any(y => y == x)))
-
-                        bool incl = (includetags.Length > 0) ? acc.tags.Any(x => includetags.Any(y => y.Equals(x))) : true;
-                        
+                        bool incl = (includetags.Length > 0) ? acc.tags.Any(x => includetags.Any(y => y.Equals(x))) : true;                        
                         bool excl = (excludetags.Length > 0) ? acc.tags.Any(x => excludetags.Any(y => y.Equals(x))) : false;
-
-                        if (incl && !excl)
+                        if (incl && !excl && acc.archived == 0)
                         {
                             accounts.Add(acc);
-                        }
-
-                        //if (acc.tags.Contains(tag))
-                        //    accounts.Add(acc);
+                        }                        
                     }
                 });
             } catch (Exception ex)

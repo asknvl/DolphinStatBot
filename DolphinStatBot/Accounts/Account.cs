@@ -10,6 +10,7 @@ namespace DolphinStatBot.Accounts
     {
         public uint id { get; set; }
         public string[] tags { get; set; }
+        public int archived { get; set; }
 
     }
 }
