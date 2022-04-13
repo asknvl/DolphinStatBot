@@ -18,16 +18,16 @@ namespace DolphinStatBot.pdf
         public PdfCreator(string sign)
         {
             //GlobalFontSettings.FontResolver = new FontResolver();
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            //Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             image = XImage.FromFile("pdf/Images/xtime_trim.png"); image = XImage.FromFile("pdf/Images/xtime_trim.png");
             this.sign = sign;
         }
 
-        public MemoryStream GetPdf(string date, List<User> users, Dictionary<uint, Statistics> userstat, Dictionary<string,Dictionary<uint, Statistics>> tagstat )
+        #region helpers
+        PdfDocument createDocument(string date, List<User> users, Dictionary<uint, Statistics> userstat, Dictionary<string, Dictionary<uint, Statistics>> tagstat, out string creationTime)
         {
-            string res = "";
+            PdfDocument document = new PdfDocument();
 
-            var document = new PdfDocument();
             var page = document.AddPage();
             page.Size = PdfSharpCore.PageSize.A5;
 
@@ -53,6 +53,8 @@ namespace DolphinStatBot.pdf
             gfx.DrawImage(image, 10, 10, 100, 56);
 
             string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            creationTime = dateTime;
+
             gfx.DrawString($"Отчет за:".PadLeft(12, ' '), fontSmal, XBrushes.Black, new XRect(195, 7, page.Width, page.Height), format);
             gfx.DrawString($"{date}", fontSmal, XBrushes.Black, new XRect(280, 7, page.Width, page.Height), format);
             gfx.DrawString($"Сформирован:".PadLeft(12, ' '), fontSmal, XBrushes.Black, new XRect(195, 27, page.Width, page.Height), format);
@@ -87,7 +89,7 @@ namespace DolphinStatBot.pdf
 
             XPen lineRed = new XPen(XColors.Black, 1);
             top += 30;
-            gfx.DrawLine(lineRed, 20, top , page.Width - 20, top);
+            gfx.DrawLine(lineRed, 20, top, page.Width - 20, top);
 
             var total = userstat.FirstOrDefault(o => o.Key == 0xFF).Value;
 
@@ -113,92 +115,36 @@ namespace DolphinStatBot.pdf
 
             gfx.DrawString(sign, fontMicro, XBrushes.Gray, new XRect(page.Width - 130, page.Height - 20, page.Width, page.Height), format);
 
+            return document;
+        }
+        #endregion
+
+        #region public
+        public MemoryStream GetPdf(string date, List<User> users, Dictionary<uint, Statistics> userstat, Dictionary<string,Dictionary<uint, Statistics>> tagstat)
+        {
+            string creationTime = "";
+            PdfDocument document = createDocument(date, users, userstat, tagstat, out creationTime);
             MemoryStream stream = new MemoryStream();
             document.Save(stream);
             return stream;
-
-            //return res;
         }
-
-        public string GetAndSavePdf(List<User> users, Dictionary<uint, Statistics> statistics)
+        public string GetAndSavePdf(string date, List<User> users, Dictionary<uint, Statistics> userstat, Dictionary<string, Dictionary<uint, Statistics>> tagstat)
         {
             string res = "";
 
-            var document = new PdfDocument();
-            var page = document.AddPage();
-            page.Size = PdfSharpCore.PageSize.A5;
-
-            var gfx = XGraphics.FromPdfPage(page);
-
-            XStringFormat formatHeader = new XStringFormat();
-            formatHeader.LineAlignment = XLineAlignment.Near;
-            formatHeader.Alignment = XStringAlignment.Near;
-            var fontHeader = new XFont("Roboto", 14, XFontStyle.Bold);
-
-            XStringFormat format = new XStringFormat();
-            format.LineAlignment = XLineAlignment.Near;
-            format.Alignment = XStringAlignment.Near;
-            var font = new XFont("Roboto", 14, XFontStyle.Regular);
-
-            int marginLeft = 25;
-            int marginTop = 100;
-            int columnDistance = 100;
-            int col = 0;
-
-            //XImage image = XImage.FromFile("pdf/Images/xtime_trim.png");
-            gfx.DrawImage(image, 10, 10, 100, 56);
-
-            string dateTime = DateTime.Now.ToString("dd.MM.yyyy-HH:mm:ss");
-            gfx.DrawString(dateTime, font, XBrushes.Black, new XRect(270, 7, page.Width, page.Height), format);
-            gfx.DrawString("Валюта: USD", font, XBrushes.Black, new XRect(270, 27, page.Width, page.Height), format);
-
-            gfx.DrawString("Имя", fontHeader, XBrushes.Black, new XRect(marginLeft + col, marginTop, page.Width, page.Height), format);
-            gfx.DrawString("Расход", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
-            gfx.DrawString("Лиды", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
-            gfx.DrawString("Лиды, CPA", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
-
-            int i = 0;
-            int top = 0;
-
-            foreach (var item in statistics)
-            {
-                if (item.Key == 0xFF)
-                    continue;
-                var user = users.FirstOrDefault(o => o.id == item.Key);
-                string userName = !user.display_name.Equals("") ? user.display_name : user.login;
-
-                col = 0;
-                top = 10 + marginTop + (i + 1) * 20;
-                gfx.DrawString(userName, font, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
-                gfx.DrawString($"{item.Value.spend}", font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-                gfx.DrawString($"{item.Value.results}", font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-                gfx.DrawString($"{item.Value.cpa}", font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-                i++;
-
-            }
-
-            XPen lineRed = new XPen(XColors.Black, 1);
-            top += 30;
-            gfx.DrawLine(lineRed, 20, top, page.Width - 20, top);
-
-            var total = statistics.FirstOrDefault(o => o.Key == 0xFF).Value;
-
-            top += 10;
-            col = 0;
-            gfx.DrawString("Итог:", fontHeader, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
-            gfx.DrawString($"{total.spend}", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-            gfx.DrawString($"{total.results}", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-            gfx.DrawString($"{total.cpa}", fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+            string creationTime = "";
+            PdfDocument document = createDocument(date, users, userstat, tagstat, out creationTime);
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "PDFS");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            res = Path.Combine(path, $"stat_{dateTime.Replace(":", " ")}.pdf");
+            res = Path.Combine(path, $"stat_{creationTime.Replace(":", " ")}.pdf");
             document.Save(res);
             
             return res;
         }
+        #endregion
     }
 }
 
