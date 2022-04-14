@@ -20,7 +20,7 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
-        string version = "dailyreporter_bot v1.1";
+        string version = "dailyreporter_bot v1.2";
 #if DEBUG
         const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
 #else

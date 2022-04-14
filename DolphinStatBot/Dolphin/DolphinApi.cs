@@ -100,30 +100,47 @@ namespace DolphinStatBot.Dolphin
                     if (!success)
                         throw new Exception($"GetStatistics success={success}");
                   
-                    JToken data = json["data"];
-                    foreach (var item in userids)
-                    {
-                        string sid = $"{item}";
-                        dynamic stat = data[sid];
-                        res.Add(/*sid*/item, new Statistics()
+                    foreach (var item in userids) {
+                        double spend = 0;
+                        uint leads = 0;
+                        double cpa = 0;
+                        dynamic jspend = json["data"][$"{item}"];
+                        spend = jspend.spend;
+                        JToken actions = json["data"][$"{item}"]["actions"];
+                        dynamic action_lead = actions.SelectToken("action_lead");
+                        
+                        if (action_lead != null)
                         {
-                            spend = stat.spend,
-                            results = stat.results,
-                            cpa = stat.cpa
-                        });
+                            leads = action_lead.quantity;
+                            cpa = action_lead.cpa;
+                        }
+                        res.Add(item, new Statistics() { 
+                            spend = spend,
+                            results = leads,
+                            cpa = cpa
+                        });                     
                     }
 
-                    dynamic? ttl = data["total"];
+                    dynamic? ttl = json["data"]["total"];                    
                     if (ttl != null)
                     {
+                        JToken actions = json["data"]["total"]["actions"];
+                        dynamic action_lead = actions.SelectToken("action_lead");
+                        double spend = 0;
+                        uint leads = 0;
+                        double cpa = 0;
+                        if (action_lead != null)
+                        {
+                            leads = action_lead.quantity;
+                            cpa = action_lead.cpa;
+                        }
                         res.Add(0xFF, new Statistics()
                         {
                             spend = ttl.spend,
-                            results = ttl.results,
-                            cpa = ttl.cpa
+                            results = leads,
+                            cpa = cpa
                         });
                     }
-
                 });
 
             } catch (Exception ex)
@@ -216,27 +233,47 @@ namespace DolphinStatBot.Dolphin
                     if (!success)
                         throw new Exception($"GetStatistics success={success}");
 
-                    JToken data = json["data"];
                     foreach (var item in accids)
                     {
-                        string sid = $"{item}";
-                        dynamic stat = data[sid];
-                        res.Add(/*sid*/item, new Statistics()
+                        double spend = 0;
+                        uint leads = 0;
+                        double cpa = 0;
+                        dynamic jspend = json["data"][$"{item}"];
+                        spend = jspend.spend;
+                        JToken actions = json["data"][$"{item}"]["actions"];
+                        dynamic action_lead = actions.SelectToken("action_lead");
+
+                        if (action_lead != null)
                         {
-                            spend = stat.spend,
-                            results = stat.results,
-                            cpa = stat.cpa
+                            leads = action_lead.quantity;
+                            cpa = action_lead.cpa;
+                        }
+                        res.Add(item, new Statistics()
+                        {
+                            spend = spend,
+                            results = leads,
+                            cpa = cpa
                         });
                     }
 
-                    dynamic? ttl = data["total"];
+                    dynamic? ttl = json["data"]["total"];
                     if (ttl != null)
                     {
+                        JToken actions = json["data"]["total"]["actions"];
+                        dynamic action_lead = actions.SelectToken("action_lead");
+                        double spend = 0;
+                        uint leads = 0;
+                        double cpa = 0;
+                        if (action_lead != null)
+                        {
+                            leads = action_lead.quantity;
+                            cpa = action_lead.cpa;
+                        }
                         res.Add(0xFF, new Statistics()
                         {
                             spend = ttl.spend,
-                            results = ttl.results,
-                            cpa = ttl.cpa
+                            results = leads,
+                            cpa = cpa
                         });
                     }
 
