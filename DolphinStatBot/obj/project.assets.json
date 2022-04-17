@@ -370,27 +370,27 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Никита\\.nuget\\packages\\": {}
+    "C:\\Users\\asknv\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
+      "projectUniqueName": "C:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
       "projectName": "DolphinStatBot",
-      "projectPath": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
-      "packagesPath": "C:\\Users\\Никита\\.nuget\\packages\\",
-      "outputPath": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\obj\\",
+      "projectPath": "C:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
+      "packagesPath": "C:\\Users\\asknv\\.nuget\\packages\\",
+      "outputPath": "C:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Никита\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asknv\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {},
-        "https://nuget.avaloniaui.net/repository/avalonia-all/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -444,7 +444,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

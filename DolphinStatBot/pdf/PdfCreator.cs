@@ -64,8 +64,9 @@ namespace DolphinStatBot.pdf
 
             gfx.DrawString("Имя", fontHeader, XBrushes.Black, new XRect(marginLeft + col, marginTop, page.Width, page.Height), format);
             gfx.DrawString("Расход".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
-            gfx.DrawString("Лиды".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
             gfx.DrawString("CPA".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
+            gfx.DrawString("Лиды".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), marginTop, page.Width, page.Height), format);
+            
 
             int i = 0;
             int top = 0;
@@ -80,9 +81,11 @@ namespace DolphinStatBot.pdf
                 col = 0;
                 top = 10 + marginTop + (i + 1) * 20;
                 gfx.DrawString(userName, font, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
-                gfx.DrawString($"{item.Value.spend:0.00}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-                gfx.DrawString($"{item.Value.results}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+
+                gfx.DrawString($"{item.Value.spend:0.00} {item.Value.spend:0}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+
                 gfx.DrawString($"{item.Value.cpa:0.00}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+                gfx.DrawString($"{item.Value.results}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);                
                 i++;
 
             }
@@ -97,8 +100,9 @@ namespace DolphinStatBot.pdf
             col = 0;
             gfx.DrawString("Итог:".PadLeft(5, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
             gfx.DrawString($"{total.spend:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-            gfx.DrawString($"{total.results}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
             gfx.DrawString($"{total.cpa:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+            gfx.DrawString($"{total.results}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+            
 
             top += 10;
             foreach (var item in tagstat)
@@ -109,8 +113,9 @@ namespace DolphinStatBot.pdf
                 var totalAcc = item.Value.FirstOrDefault(o => o.Key == 0xFF).Value;
                 gfx.DrawString($"{item.Key}:".PadLeft(5, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
                 gfx.DrawString($"{totalAcc.spend:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-                gfx.DrawString($"{totalAcc.results}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
                 gfx.DrawString($"{totalAcc.cpa:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+                gfx.DrawString($"{totalAcc.results}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+                
             }
 
             gfx.DrawString(sign, fontMicro, XBrushes.Gray, new XRect(page.Width - 130, page.Height - 20, page.Width, page.Height), format);
