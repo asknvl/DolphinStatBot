@@ -81,9 +81,7 @@ namespace DolphinStatBot.pdf
                 col = 0;
                 top = 10 + marginTop + (i + 1) * 20;
                 gfx.DrawString(userName, font, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
-
-                gfx.DrawString($"{item.Value.spend:0.00} {item.Value.spend:0}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
-
+                gfx.DrawString($"{Math.Round(item.Value.spend):0}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
                 gfx.DrawString($"{item.Value.cpa:0.00}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
                 gfx.DrawString($"{item.Value.results}".PadLeft(8, ' '), font, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);                
                 i++;
@@ -99,7 +97,7 @@ namespace DolphinStatBot.pdf
             top += 10;
             col = 0;
             gfx.DrawString("Итог:".PadLeft(5, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
-            gfx.DrawString($"{total.spend:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+            gfx.DrawString($"{Math.Round(total.spend):0}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
             gfx.DrawString($"{total.cpa:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
             gfx.DrawString($"{total.results}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
             
@@ -112,7 +110,7 @@ namespace DolphinStatBot.pdf
 
                 var totalAcc = item.Value.FirstOrDefault(o => o.Key == 0xFF).Value;
                 gfx.DrawString($"{item.Key}:".PadLeft(5, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + col, top, page.Width, page.Height), format);
-                gfx.DrawString($"{totalAcc.spend:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
+                gfx.DrawString($"{Math.Round(totalAcc.spend):0}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
                 gfx.DrawString($"{totalAcc.cpa:0.00}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
                 gfx.DrawString($"{totalAcc.results}".PadLeft(8, ' '), fontHeader, XBrushes.Black, new XRect(marginLeft + (col += columnDistance), top, page.Width, page.Height), format);
                 
