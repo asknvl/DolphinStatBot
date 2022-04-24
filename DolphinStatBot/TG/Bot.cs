@@ -104,7 +104,7 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                string[] tags = new string[] { "IND", "PER", "AUS" };
+                string[] tags = new string[] { "IND", "PER" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
@@ -130,7 +130,7 @@ namespace DolphinStatBot.TG
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
                 //string[] tags = new string[] { "IND", "PER", "AUS" };
-                string[] tags = new string[] { "IND", "PER", "AUS"};
+                string[] tags = new string[] { "IND", "PER" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
