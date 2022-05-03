@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj": {}
+    "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj": {}
   },
   "projects": {
-    "d:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj": {
+    "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
+        "projectUniqueName": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
         "projectName": "DolphinStatBot",
-        "projectPath": "d:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
+        "projectPath": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\DolphinStatBot.csproj",
         "packagesPath": "C:\\Users\\Никита\\.nuget\\packages\\",
-        "outputPath": "d:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\obj\\",
+        "outputPath": "D:\\WORK\\xtime\\Sources\\DolphinStatBot\\DolphinStatBot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Никита\\AppData\\Roaming\\NuGet\\NuGet.Config",

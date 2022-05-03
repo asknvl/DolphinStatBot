@@ -174,8 +174,12 @@ namespace DolphinStatBot.TG
                 return;
 
             var id = update.Message.Chat.Id;
+
             string name = $"{update.Message.Chat.FirstName} {update.Message.Chat.LastName}";
-            var msg = update.Message.Text.ToLowerInvariant();
+            string msg = update.Message.Text?.ToLowerInvariant();
+            if (msg == null)
+                return;
+
 
             switch (msg)
             {
