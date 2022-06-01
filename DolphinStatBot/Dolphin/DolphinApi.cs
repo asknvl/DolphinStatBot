@@ -257,6 +257,7 @@ namespace DolphinStatBot.Dolphin
                     }
 
                     dynamic? ttl = json["data"]["total"];
+
                     if (ttl != null)
                     {
                         JToken actions = json["data"]["total"]["actions"];

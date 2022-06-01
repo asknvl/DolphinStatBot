@@ -20,12 +20,12 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
-        string version = "dailyreporter_bot v1.6";
+        string version = "dailyreporter_bot v1.9";
 #if DEBUG
         const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";        
 #else
         #region const
-        const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
+        const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";        
         #endregion
 #endif
 
@@ -84,7 +84,7 @@ namespace DolphinStatBot.TG
             }
         }
 
-#region private
+    #region private
         async void send(string msg, Update upd, CancellationToken ct)
         {
             Message sentMessage = await botClient.SendTextMessageAsync(
@@ -104,7 +104,7 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                string[] tags = new string[] { "IND", "PER", "KZ" };
+                string[] tags = new string[] { "IND", "PER", "KAZ" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
@@ -130,7 +130,7 @@ namespace DolphinStatBot.TG
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
                 //string[] tags = new string[] { "IND", "PER", "AUS" };
-                string[] tags = new string[] { "IND", "PER", "KZ" };
+                string[] tags = new string[] { "IND", "PER", "KAZ" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
@@ -145,9 +145,15 @@ namespace DolphinStatBot.TG
         }
 
         async Task sendStat(long id, Stream stream, string date, string time)
-        {            
-            InputOnlineFile inputOnlineFile = new InputOnlineFile(stream, $"{date} {time}.pdf");
-            await botClient.SendDocumentAsync(id, inputOnlineFile);
+        {
+            try
+            {
+                InputOnlineFile inputOnlineFile = new InputOnlineFile(stream, $"{date} {time}.pdf");
+                await botClient.SendDocumentAsync(id, inputOnlineFile);
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         async Task sendStat()
@@ -249,9 +255,9 @@ namespace DolphinStatBot.TG
             Console.WriteLine(ErrorMessage);
             return Task.CompletedTask;
         }
-#endregion
+    #endregion
 
-#region public
+    #region public
         public void Start()
         {
             cts = new CancellationTokenSource();
@@ -267,6 +273,6 @@ namespace DolphinStatBot.TG
                 receiverOptions,
                 cancellationToken: cts.Token);
         }        
-#endregion
+    #endregion
     }
 }
