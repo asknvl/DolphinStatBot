@@ -20,7 +20,7 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
-        string version = "dailyreporter_bot v1.9";
+        string version = "dailyreporter_bot v1.10";
 #if DEBUG
         const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";        
 #else
@@ -104,7 +104,7 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                string[] tags = new string[] { "IND", "PER", "KAZ" };
+                string[] tags = new string[] { "IND", "PER", "KAZ", "LAM" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
@@ -130,7 +130,7 @@ namespace DolphinStatBot.TG
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
                 //string[] tags = new string[] { "IND", "PER", "AUS" };
-                string[] tags = new string[] { "IND", "PER", "KAZ" };
+                string[] tags = new string[] { "IND", "PER", "KAZ", "LAM" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
