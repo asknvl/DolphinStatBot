@@ -20,9 +20,10 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
-        string version = "dailyreporter_bot v1.10";
+        string version = "dailyreporter_bot v1.11";
 #if DEBUG
-        const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";        
+        const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
+        //const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
 #else
         #region const
         const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";        
@@ -46,7 +47,7 @@ namespace DolphinStatBot.TG
         public Bot()
         {
             dolphin = new DolphinApi("http://188.225.43.87", "1-578000f643ac0dd4f72579dd758ebd8e");
-            dolphin.FilteredIDs = new List<uint> { 2, 6, 7, 8, 14 };
+            dolphin.FilteredIDs = new List<uint> { 2, 6, 7, 8, 14, 15, 16 };
 
             pdf = new PdfCreator(version);
             userManager = new UserManager();
@@ -104,7 +105,7 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                string[] tags = new string[] { "IND", "PER", "KAZ", "LAM" };
+                string[] tags = new string[] { "IND", "PER", "LAM1", "LAM2" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
@@ -130,7 +131,7 @@ namespace DolphinStatBot.TG
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
                 //string[] tags = new string[] { "IND", "PER", "AUS" };
-                string[] tags = new string[] { "IND", "PER", "KAZ", "LAM" };
+                string[] tags = new string[] { "IND", "PER", "LAM1", "LAM2" };
                 foreach (var tag in tags)
                 {
                     var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });

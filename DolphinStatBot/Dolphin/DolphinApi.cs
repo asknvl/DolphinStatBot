@@ -56,8 +56,9 @@ namespace DolphinStatBot.Dolphin
                         {
                             User? user = result.ToObject<User>();
                             if (user != null)
-                                if (!FilteredIDs.Contains(user.id))
-                                users.Add(user);
+                                //if (!FilteredIDs.Contains(user.id))
+                                if (user.status != -1)
+                                    users.Add(user);
                         }
                     }
 
