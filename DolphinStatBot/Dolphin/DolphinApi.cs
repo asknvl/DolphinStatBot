@@ -187,7 +187,7 @@ namespace DolphinStatBot.Dolphin
                             tags = jtags.ToObject<string[]>(),     
                             archived = jarch.ToObject<int>()
                         };
-                        bool incl = (includetags.Length > 0) ? acc.tags.Any(x => includetags.Any(y => x.Contains(y))) : true;                        
+                        bool incl = (includetags.Length > 0) ? acc.tags.Any(x => includetags.Any(y => x.Equals(y))) : true;                        
                         bool excl = (excludetags.Length > 0) ? acc.tags.Any(x => excludetags.Any(y => y.Equals(x))) : false;
                         if (incl && !excl && acc.archived == 0)
                         {

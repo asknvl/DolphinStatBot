@@ -20,10 +20,10 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
-        string version = "dailyreporter_bot v1.12";
+        string version = "dailyreporter_bot v1.13";
 #if DEBUG
-        const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
-        //const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
+        //const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
+        const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
 #else
         #region const
         const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";        
@@ -105,13 +105,19 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                string[] tags = new string[] { "IND", "PER", "LAM1", "LAM2", "CHL" };
+                string[] tags = new string[] { "IND", "PER", "CHL", "PERX1", "PERX2", "CHLX1", "CHLX2" };
                 foreach (var tag in tags)
                 {
-                    var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
-                    var intIds = accs.Select(acc => acc.id).ToArray();
-                    var stat = await dolphin.GetStatisticsByAccounts(intIds, date, date);
-                    tagstat.Add(tag, stat);
+                    try
+                    {
+                        var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
+                        var intIds = accs.Select(acc => acc.id).ToArray();
+                        var stat = await dolphin.GetStatisticsByAccounts(intIds, date, date);
+                        tagstat.Add(tag, stat);
+                    } catch (Exception ex)
+                    {
+
+                    }
                 }
 
                 stream = pdf.GetPdf(date, users, userstat, tagstat);
@@ -131,13 +137,19 @@ namespace DolphinStatBot.TG
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
                 //string[] tags = new string[] { "IND", "PER", "AUS" };
-                string[] tags = new string[] { "IND", "PER", "LAM1", "LAM2", "CHL" };
+                string[] tags = new string[] { "IND", "PER", "CHL", "PERX1", "PERX2", "CHLX1", "CHLX2" };
                 foreach (var tag in tags)
                 {
-                    var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
-                    var intIds = accs.Select(acc => acc.id).ToArray();
-                    var stat = await dolphin.GetStatisticsByAccounts(intIds, date, date);
-                    tagstat.Add(tag, stat);
+                    try
+                    {
+                        var accs = await dolphin.GetAccounts(intids, new string[] { tag }, new string[] { "не-обновлять", "без-комментов" });
+                        var intIds = accs.Select(acc => acc.id).ToArray();
+                        var stat = await dolphin.GetStatisticsByAccounts(intIds, date, date);
+                        tagstat.Add(tag, stat);
+                    } catch (Exception ex)
+                    {
+
+                    }
                 }
 
                 path = pdf.GetAndSavePdf(date, users, userstat, tagstat);
