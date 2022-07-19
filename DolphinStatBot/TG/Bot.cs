@@ -20,7 +20,7 @@ namespace DolphinStatBot.TG
 {
     public class Bot
     {
-        string version = "dailyreporter_bot v1.13";
+        string version = "dailyreporter_bot v1.14";
 #if DEBUG
         //const string Token = "5136456760:AAGIgTrNI7sTdf8xxLPNRFeI38uXdAbOS0o";
         const string Token = "5166876147:AAHqU1jssTleiNMz52BfEo5qkPaLeUnXa-w";
@@ -105,7 +105,8 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                string[] tags = new string[] { "IND", "PER", "CHL", "PERX1", "PERX2", "CHLX1", "CHLX2" };
+                //string[] tags = new string[] { "IND", "PER", "CHL", "PERX1", "PERX2", "CHLX1", "CHLX2" };
+                string[] tags = new string[] { "IND", "PER", "PERX1", "PERX2", "COLX1", "COLX2" };
                 foreach (var tag in tags)
                 {
                     try
@@ -136,8 +137,8 @@ namespace DolphinStatBot.TG
 
                 var intids = users.Select(user => (int)user.id).ToArray();
                 var tagstat = new Dictionary<string, Dictionary<uint, Statistics>>();
-                //string[] tags = new string[] { "IND", "PER", "AUS" };
-                string[] tags = new string[] { "IND", "PER", "CHL", "PERX1", "PERX2", "CHLX1", "CHLX2" };
+                //string[] tags = new string[] { "IND", "PER", "CHL", "PERX1", "PERX2", "CHLX1", "CHLX2" };
+                string[] tags = new string[] { "IND", "PER", "PERX1", "PERX2", "COLX1", "COLX2" };
                 foreach (var tag in tags)
                 {
                     try
